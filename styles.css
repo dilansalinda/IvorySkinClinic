@@ -109,8 +109,19 @@ header {
   position: sticky;
   top: 0;
   z-index: 1000;
-  background-color: var(--color-surface);
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(200, 155, 107, 0.18);
+  border-left: 0;
+  border-right: 0;
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.12);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+@supports not ((backdrop-filter: blur(10px)) or (-webkit-backdrop-filter: blur(10px))) {
+  header {
+    background: rgba(255, 255, 255, 0.95);
+  }
 }
 
 nav {
@@ -171,10 +182,13 @@ nav {
   right: 1rem;
   width: min(320px, calc(100vw - 2rem));
   padding: 0.9rem;
-  background: var(--color-surface);
+  background: rgba(255, 255, 255, 0.86);
+  border: 1px solid rgba(200, 155, 107, 0.18);
   border-radius: 16px;
   box-shadow: 0 18px 40px rgba(0, 0, 0, 0.16);
   z-index: 1001;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
 .nav-links a {
@@ -209,20 +223,26 @@ nav {
   .nav-links {
     display: flex;
     flex-direction: row;
-    gap: 1.5rem;
+    align-items: center;
+    gap: 0.2rem;
     position: static;
     width: auto;
-    padding: 0;
-    box-shadow: none;
+    padding: 0.35rem;
+    background: rgba(255, 255, 255, 0.62);
+    border: 1px solid rgba(200, 155, 107, 0.18);
+    border-radius: 999px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.06);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
   }
 
   .nav-links a {
-    padding: 0;
-    border-radius: 0;
+    padding: 0.55rem 0.85rem;
+    border-radius: 999px;
   }
 
   .nav-links a:hover {
-    background: transparent;
+    background: rgba(243, 215, 182, 0.55);
   }
 }
 
@@ -422,6 +442,8 @@ h3 {
 
 .hero-badge {
   display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
   width: fit-content;
   padding: 0.5rem 0.85rem;
   border-radius: 999px;
@@ -430,6 +452,17 @@ h3 {
   box-shadow: var(--shadow-sm);
   color: var(--color-muted);
   font-size: 0.95rem;
+  line-height: 1;
+}
+
+.hero-badge i {
+  font-size: 0.95rem;
+  color: rgba(160, 116, 69, 0.95);
+}
+
+.hero-badge span {
+  display: inline-block;
+  line-height: 1.1;
 }
 
 .hero-gallery {
@@ -484,20 +517,163 @@ h3 {
 /* =====================
    TESTIMONIALS
    ===================== */
-.testimonials {
+.reviews {
+  margin-top: 2.5rem;
+}
+
+.reviews-stage {
+  position: relative;
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(200, 155, 107, 0.14);
+  border-radius: 22px;
+  box-shadow: 0 22px 60px rgba(0, 0, 0, 0.08);
+  padding: 1.15rem;
+  overflow: hidden;
   display: grid;
+  grid-template-rows: minmax(140px, auto) auto;
   gap: 1rem;
-  margin-top: 3rem;
 }
 
-.testimonial-card {
-  background-color: var(--color-surface);
-  padding: 1.25rem;
+.review-card {
+  grid-row: 1;
+  grid-column: 1;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 360ms ease, transform 360ms ease;
+  pointer-events: none;
 }
 
-@media (min-width: 768px) {
-  .testimonials {
-    grid-template-columns: repeat(3, 1fr);
+.review-card.is-active {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.review-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.review-person {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-width: 0;
+}
+
+.review-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 16px;
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+  color: rgba(160, 116, 69, 1);
+  background: rgba(243, 215, 182, 0.6);
+  border: 1px solid rgba(200, 155, 107, 0.18);
+  flex: 0 0 auto;
+}
+
+.review-name {
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.review-source {
+  color: var(--color-muted);
+  font-size: 0.85rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 0.15rem;
+}
+
+.review-stars {
+  display: inline-flex;
+  gap: 0.2rem;
+  color: rgba(200, 155, 107, 1);
+  flex: 0 0 auto;
+}
+
+.review-text {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+}
+
+.review-controls {
+  grid-row: 2;
+  display: grid;
+  grid-template-columns: 44px 1fr 44px;
+  align-items: center;
+  gap: 0.75rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(200, 155, 107, 0.12);
+  margin-top: 0;
+}
+
+@media (max-width: 520px) {
+  .review-head {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .review-text {
+    font-size: 1.05rem;
+  }
+}
+
+.review-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 16px;
+  border: 1px solid rgba(200, 155, 107, 0.18);
+  background: rgba(255, 255, 255, 0.85);
+  color: rgba(160, 116, 69, 1);
+  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.06);
+  transition: transform 160ms ease, box-shadow 220ms ease, border-color 200ms ease;
+}
+
+.review-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.1);
+  border-color: rgba(200, 155, 107, 0.35);
+}
+
+.review-btn:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.review-dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.45rem;
+}
+
+.review-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(200, 155, 107, 0.35);
+  background: rgba(255, 255, 255, 0.9);
+  transition: transform 160ms ease, background-color 160ms ease, width 160ms ease;
+}
+
+.review-dot.is-active {
+  background: rgba(200, 155, 107, 0.8);
+  width: 24px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .review-card,
+  .review-btn,
+  .review-dot {
+    transition: none;
   }
 }
 
@@ -973,6 +1149,23 @@ h3 {
   align-items: start;
 }
 
+.footer-top > * {
+  width: 100%;
+  min-width: 0;
+}
+
+/* Tablet layout: Brand + Quick Links side-by-side, Contact full width */
+@media (min-width: 640px) and (max-width: 899px) {
+  .footer-top {
+    grid-template-columns: 1fr 1fr;
+    align-items: stretch;
+  }
+
+  .footer-contact {
+    grid-column: 1 / -1;
+  }
+}
+
 @media (min-width: 900px) {
   .footer-top {
     grid-template-columns: 1.2fr 0.7fr 1.1fr;
@@ -991,6 +1184,7 @@ h3 {
   display: flex;
   gap: 0.85rem;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .footer-logo {
@@ -1062,6 +1256,31 @@ h3 {
   display: grid;
   gap: 0.55rem;
   align-content: start;
+  margin: 0;
+  max-width: none;
+}
+
+.footer-links .footer-title {
+  grid-column: 1 / -1;
+}
+
+/* Make Quick Links feel balanced: use 2 columns when there’s room */
+@media (min-width: 640px) {
+  .footer-links {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+  }
+}
+
+@media (max-width: 560px) {
+  .footer-links {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+  }
+
+  .footer-links a {
+    padding: 0.6rem 0.65rem;
+  }
 }
 
 .footer-links a {

@@ -3,11 +3,50 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Ivory Skin Clinic – a luxury skincare clinic offering facial rejuvenation, anti-aging skin care, and personalized treatments." />
+  <meta name="description" content="Ivory Skin Clinic in Royal Pearl Garden, Wattala — advanced aesthetic & medical skin care including facials, acne treatments, laser & pigmentation, PRP therapy, and rejuvenation." />
   <meta name="theme-color" content="#f8f4f0" />
-  <title>Ivory Skin Clinic | Luxury Skincare & Facial Rejuvenation</title>
+  <meta name="robots" content="index,follow,max-image-preview:large" />
+  <title>Ivory Skin Clinic</title>
 
   <link rel="preload" href="fonnts.com-theseasons-reg.otf" as="font" type="font/otf" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="apple-touch-icon" href="assets/icons/icon-192.png" />
+  <link rel="icon" href="assets/icons/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/icons/favicon-16x16.png" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Ivory Skin Clinic" />
+  <meta property="og:title" content="Ivory Skin Clinic" />
+  <meta property="og:description" content="Advanced aesthetic & medical skin care in Royal Pearl Garden, Wattala." />
+  <meta property="og:image" content="assets/icons/icon-512.png" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Ivory Skin Clinic" />
+  <meta name="twitter:description" content="Advanced aesthetic & medical skin care in Royal Pearl Garden, Wattala." />
+  <meta name="twitter:image" content="assets/icons/icon-512.png" />
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "MedicalBusiness",
+      "name": "Ivory Skin Clinic",
+      "description": "Advanced aesthetic & medical skin care in Royal Pearl Garden, Wattala.",
+      "telephone": "+94 77 000 0000",
+      "email": "info@ivoryskinclinic.com",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Wattala",
+        "addressCountry": "LK"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 6.984844793016112,
+        "longitude": 79.88380797528694
+      },
+      "image": "assets/icons/icon-512.png"
+    }
+  </script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -63,7 +102,10 @@
       <div class="hero-media-frame">
         <img src="assets/outdoor/WhatsApp%20Image%202026-01-01%20at%204.17.19%20PM.jpeg" alt="" loading="eager" decoding="async" />
       </div>
-      <div class="hero-badge">Royal Pearl Garden • Wattala</div>
+      <div class="hero-badge">
+        <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
+        <span>Royal Pearl Garden • Wattala</span>
+      </div>
 
       <div class="hero-gallery" aria-label="Clinic gallery">
         <img src="assets/indoor/IMG-20251228-WA0003~2.jpg" alt="" loading="lazy" decoding="async" />
@@ -73,18 +115,77 @@
       </div>
     </div>
 
-    <div class="testimonials">
-      <div class="testimonial-card">
-        <p class="quote">“My skin has never looked better.”</p>
-        <p class="quote-meta">— Amaya P.</p>
-      </div>
-      <div class="testimonial-card">
-        <p class="quote">“Professional, luxurious, and results-driven.”</p>
-        <p class="quote-meta">— Nimal K.</p>
-      </div>
-      <div class="testimonial-card">
-        <p class="quote">“The best anti-aging care I’ve experienced.”</p>
-        <p class="quote-meta">— Tharushi S.</p>
+    <div class="reviews" aria-label="Customer reviews">
+      <div class="reviews-stage">
+        <article class="review-card is-active">
+          <div class="review-head">
+            <div class="review-person">
+              <span class="review-avatar" aria-hidden="true">A</span>
+              <div>
+                <div class="review-name">Amaya P.</div>
+                <div class="review-source"><i class="fa-brands fa-google" aria-hidden="true"></i> Google Review</div>
+              </div>
+            </div>
+            <div class="review-stars" aria-label="5 out of 5 stars">
+              <i class="fa-solid fa-star" aria-hidden="true"></i>
+              <i class="fa-solid fa-star" aria-hidden="true"></i>
+              <i class="fa-solid fa-star" aria-hidden="true"></i>
+              <i class="fa-solid fa-star" aria-hidden="true"></i>
+              <i class="fa-solid fa-star" aria-hidden="true"></i>
+            </div>
+          </div>
+          <p class="review-text">“My skin has never looked better. The clinic is calm, clean, and the results were amazing.”</p>
+        </article>
+
+        <article class="review-card">
+          <div class="review-head">
+            <div class="review-person">
+              <span class="review-avatar" aria-hidden="true">N</span>
+              <div>
+                <div class="review-name">Nimal K.</div>
+                <div class="review-source"><i class="fa-brands fa-google" aria-hidden="true"></i> Google Review</div>
+              </div>
+            </div>
+            <div class="review-stars" aria-label="5 out of 5 stars">
+              <i class="fa-solid fa-star" aria-hidden="true"></i>
+              <i class="fa-solid fa-star" aria-hidden="true"></i>
+              <i class="fa-solid fa-star" aria-hidden="true"></i>
+              <i class="fa-solid fa-star" aria-hidden="true"></i>
+              <i class="fa-solid fa-star" aria-hidden="true"></i>
+            </div>
+          </div>
+          <p class="review-text">“Professional, luxurious, and results-driven. They explained everything clearly and made me feel comfortable.”</p>
+        </article>
+
+        <article class="review-card">
+          <div class="review-head">
+            <div class="review-person">
+              <span class="review-avatar" aria-hidden="true">T</span>
+              <div>
+                <div class="review-name">Tharushi S.</div>
+                <div class="review-source"><i class="fa-brands fa-google" aria-hidden="true"></i> Google Review</div>
+              </div>
+            </div>
+            <div class="review-stars" aria-label="5 out of 5 stars">
+              <i class="fa-solid fa-star" aria-hidden="true"></i>
+              <i class="fa-solid fa-star" aria-hidden="true"></i>
+              <i class="fa-solid fa-star" aria-hidden="true"></i>
+              <i class="fa-solid fa-star" aria-hidden="true"></i>
+              <i class="fa-solid fa-star" aria-hidden="true"></i>
+            </div>
+          </div>
+          <p class="review-text">“The best anti-aging care I’ve experienced. Subtle, natural results and great aftercare advice.”</p>
+        </article>
+
+        <div class="review-controls" aria-label="Review controls">
+          <button class="review-btn" type="button" data-review-prev aria-label="Previous review">
+            <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>
+          </button>
+          <div class="review-dots" aria-label="Review selector"></div>
+          <button class="review-btn" type="button" data-review-next aria-label="Next review">
+            <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
+          </button>
+        </div>
       </div>
     </div>
   </section>
@@ -503,10 +604,6 @@
   <a class="floating-btn" href="tel:+94770000000" aria-label="Call Ivory Skin Clinic">
     <i class="fa-solid fa-phone" aria-hidden="true"></i>
     <span class="floating-tip">Call</span>
-  </a>
-  <a class="floating-btn" href="mailto:info@ivoryskinclinic.com" aria-label="Email Ivory Skin Clinic">
-    <i class="fa-solid fa-envelope" aria-hidden="true"></i>
-    <span class="floating-tip">Email</span>
   </a>
 </div>
 
