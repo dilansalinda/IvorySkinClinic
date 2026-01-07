@@ -152,6 +152,30 @@ nav {
   line-height: 1.05;
 }
 
+/* Mobile: center the brand while keeping hamburger on the right */
+@media (max-width: 767px) {
+  .nav-brand {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    justify-content: center;
+    max-width: calc(100% - 120px); /* prevents overlap with hamburger */
+    text-align: center;
+  }
+
+  .nav-brand-text {
+    align-items: center;
+  }
+
+  .nav-brand img {
+    height: 34px;
+  }
+
+  .nav-brand-title {
+    font-size: 1.1rem;
+  }
+}
+
 .nav-brand-title {
   font-family: var(--font-heading);
   font-size: 1.2rem;
@@ -314,6 +338,34 @@ h3 {
   flex-wrap: wrap;
 }
 
+/* Mobile: center hero CTA buttons */
+@media (max-width: 767px) {
+  .hero-content {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+  }
+
+  .hero-content p {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 55ch;
+  }
+
+  .hero-content .eyebrow {
+    justify-content: center;
+  }
+
+  .hero-actions {
+    justify-content: center;
+  }
+
+  .hero-actions .btn-primary,
+  .hero-actions .btn-secondary {
+    width: min(360px, 100%);
+  }
+}
+
 .btn-primary {
   display: inline-flex;
   align-items: center;
@@ -402,6 +454,22 @@ h3 {
   display: grid;
   gap: 1rem;
   align-content: start;
+}
+
+.hero-media--compact {
+  gap: 0.75rem;
+}
+
+.hero-media--compact .hero-media-frame {
+  height: clamp(220px, 34vw, 320px);
+}
+
+.hero-media--compact .hero-gallery img {
+  height: 76px;
+}
+
+.hero-media--compact .hero-badge {
+  font-size: 0.9rem;
 }
 
 .hero-media-frame {
@@ -706,6 +774,54 @@ h3 {
   margin-top: 0.65rem;
   color: var(--color-muted);
   font-size: 0.95rem;
+}
+
+.doctor-tile {
+  background: rgba(255, 255, 255, 0.78);
+  border: 1px solid rgba(200, 155, 107, 0.16);
+  border-radius: 18px;
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.08);
+  padding: 0.9rem 0.95rem;
+  display: grid;
+  gap: 0.45rem;
+  color: var(--color-text);
+}
+
+.doctor-name {
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.doctor-quals {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem 0.9rem;
+  color: var(--color-muted);
+  font-size: 0.95rem;
+}
+
+.doctor-quals i,
+.doctor-reg i {
+  color: rgba(160, 116, 69, 0.95);
+  margin-right: 0.35rem;
+}
+
+.doctor-reg {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: var(--color-muted);
+  font-size: 0.95rem;
+}
+
+@media (max-width: 520px) {
+  .doctor-tile {
+    padding: 0.8rem 0.85rem;
+  }
+  .doctor-quals,
+  .doctor-reg {
+    font-size: 0.9rem;
+  }
 }
 
 .doctor-card img {
