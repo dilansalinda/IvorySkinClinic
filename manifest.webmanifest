@@ -1,14 +1,42 @@
 {
-  "name": "Ivory Skin Clinic",
-  "short_name": "Ivory",
-  "description": "Luxury skincare clinic offering facial rejuvenation, anti-aging skin care, and personalized medical-grade treatments.",
+  "name": "Ivory Skin Clinic - Advanced Aesthetic & Medical Skin Care",
+  "short_name": "Ivory Clinic",
+  "description": "Luxury skincare clinic offering facial rejuvenation, anti-aging skin care, and personalized medical-grade treatments in Wattala, Sri Lanka.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
+  "orientation": "portrait-primary",
   "background_color": "#f8f4f0",
-  "theme_color": "#f8f4f0",
+  "theme_color": "#c89b6b",
+  "categories": ["medical", "health", "beauty"],
+  "lang": "en",
+  "dir": "ltr",
   "icons": [
     {
+      "src": "assets/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/icons/maskable-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "assets/icons/maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
       "src": "assets/icons/android-chrome-192x192.png",
       "sizes": "192x192",
       "type": "image/png"
@@ -17,18 +45,33 @@
       "src": "assets/icons/android-chrome-512x512.png",
       "sizes": "512x512",
       "type": "image/png"
+    }
+  ],
+  "screenshots": [],
+  "shortcuts": [
+    {
+      "name": "Book Appointment",
+      "short_name": "Book",
+      "description": "Book an appointment at Ivory Skin Clinic",
+      "url": "./#appointment",
+      "icons": [
+        {
+          "src": "assets/icons/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
     },
     {
-      "src": "assets/icons/android-chrome-192x192.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "maskable"
-    },
-    {
-      "src": "assets/icons/android-chrome-512x512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "maskable"
+      "name": "View Services",
+      "short_name": "Services",
+      "description": "View our skincare services",
+      "url": "./#services",
+      "icons": [
+        {
+          "src": "assets/icons/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
     }
   ]
 }

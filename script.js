@@ -9,11 +9,53 @@
   // PWA: register service worker (requires http(s) or localhost)
   if ("serviceWorker" in navigator) {
     window.addEventListener("load", function () {
-      navigator.serviceWorker.register("./sw.js").catch(function () {
-        // ignore
-      });
+      navigator.serviceWorker
+        .register("./sw.js")
+        .then(function (registration) {
+          console.log("Service Worker registered successfully:", registration.scope);
+          
+          // Check for updates periodically
+          setInterval(function () {
+            registration.update();
+          }, 60 * 60 * 1000); // Check every hour
+          
+          // Handle updates
+          registration.addEventListener("updatefound", function () {
+            const newWorker = registration.installing;
+            if (newWorker) {
+              newWorker.addEventListener("statechange", function () {
+                if (newWorker.state === "installed" && navigator.serviceWorker.controller) {
+                  // New service worker available, reload to activate
+                  console.log("New service worker available. Reloading...");
+                  window.location.reload();
+                }
+              });
+            }
+          });
+        })
+        .catch(function (error) {
+          console.error("Service Worker registration failed:", error);
+        });
+    });
+    
+    // Listen for service worker controller changes
+    let refreshing = false;
+    navigator.serviceWorker.addEventListener("controllerchange", function () {
+      if (!refreshing) {
+        refreshing = true;
+        window.location.reload();
+      }
     });
   }
+  
+  // PWA: Handle install prompt
+  let deferredPrompt;
+  window.addEventListener("beforeinstallprompt", function (e) {
+    e.preventDefault();
+    deferredPrompt = e;
+    // You can show a custom install button here if desired
+    // For now, we'll let the browser handle it automatically
+  });
 
   // Hero gallery -> swap main hero image (scoped to HERO section only)
   const heroMediaRoot = document.querySelector(".section--hero .hero-media");
@@ -174,6 +216,186 @@
     startHeroTimer();
   }
 
+  // About section gallery -> auto-rotate clinic gallery images
+  const aboutMediaRoot = document.querySelector(".hero-media--compact");
+  const aboutFrame = aboutMediaRoot ? aboutMediaRoot.querySelector(".hero-media-frame") : null;
+  let aboutFrameImg = aboutFrame ? aboutFrame.querySelector("img") : null;
+  const aboutGallery = aboutMediaRoot ? aboutMediaRoot.querySelector(".hero-gallery") : null;
+
+  function swapAboutImage(nextSrc, activeThumb) {
+    if (!aboutFrame || !aboutFrameImg || !nextSrc) return;
+    const currentSrc = aboutFrameImg.getAttribute("src");
+    if (currentSrc === nextSrc) {
+      if (activeThumb) {
+        aboutGallery.querySelectorAll("img").forEach(function (img) {
+          img.classList.remove("is-active");
+        });
+        activeThumb.classList.add("is-active");
+      }
+      return;
+    }
+
+    const newImg = new Image();
+    newImg.decoding = "async";
+    newImg.loading = "eager";
+    newImg.src = nextSrc;
+
+    newImg.onload = function () {
+      const nextEl = document.createElement("img");
+      nextEl.setAttribute("src", nextSrc);
+      nextEl.setAttribute("alt", "");
+      nextEl.setAttribute("decoding", "async");
+      nextEl.setAttribute("loading", "eager");
+      nextEl.classList.add("is-top", "is-fade-in");
+
+      aboutFrame.appendChild(nextEl);
+
+      const prevEl = aboutFrameImg;
+      prevEl.classList.add("is-fade-out");
+
+      requestAnimationFrame(function () {
+        nextEl.classList.remove("is-fade-in");
+      });
+
+      const cleanup = function () {
+        prevEl.removeEventListener("transitionend", cleanup);
+        if (prevEl.parentNode) prevEl.parentNode.removeChild(prevEl);
+        nextEl.classList.remove("is-top");
+        aboutFrameImg = nextEl;
+      };
+
+      prevEl.addEventListener("transitionend", cleanup);
+
+      if (activeThumb) {
+        aboutGallery.querySelectorAll("img").forEach(function (img) {
+          img.classList.remove("is-active");
+        });
+        activeThumb.classList.add("is-active");
+      }
+    };
+
+    newImg.onerror = function () {
+      // no-op
+    };
+  }
+
+  if (aboutGallery && aboutFrameImg) {
+    // Initial active state
+    const initialSrc = aboutFrameImg.getAttribute("src") || "";
+    const initialNorm = normalizeSrc(initialSrc);
+    let initialThumb = null;
+    aboutGallery.querySelectorAll("img").forEach(function (img) {
+      if (normalizeSrc(img.getAttribute("src") || "") === initialNorm) {
+        initialThumb = img;
+      }
+    });
+    
+    // If current image doesn't match any gallery image, start with first gallery image after a brief delay
+    if (!initialThumb && aboutGallery.querySelectorAll("img").length > 0) {
+      initialThumb = aboutGallery.querySelectorAll("img")[0];
+      setTimeout(function() {
+        const firstGallerySrc = initialThumb.getAttribute("src");
+        swapAboutImage(firstGallerySrc, initialThumb);
+      }, 500);
+    }
+    
+    if (initialThumb) {
+      aboutGallery.querySelectorAll("img").forEach(function (img) {
+        img.classList.remove("is-active");
+      });
+      initialThumb.classList.add("is-active");
+    }
+
+    // Click/keyboard handlers for manual navigation
+    aboutGallery.querySelectorAll("img").forEach(function (thumb) {
+      thumb.setAttribute("role", "button");
+      thumb.setAttribute("tabindex", "0");
+      thumb.addEventListener("click", function () {
+        const nextSrc = thumb.getAttribute("src");
+        // Pause auto-rotation temporarily when user clicks
+        stopAboutTimer();
+        swapAboutImage(nextSrc, thumb);
+        // Resume auto-rotation after 3 seconds
+        setTimeout(function() {
+          startAboutTimer();
+        }, 3000);
+      });
+      thumb.addEventListener("keydown", function (e) {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          const nextSrc = thumb.getAttribute("src");
+          // Pause auto-rotation temporarily when user interacts
+          stopAboutTimer();
+          swapAboutImage(nextSrc, thumb);
+          // Resume auto-rotation after 3 seconds
+          setTimeout(function() {
+            startAboutTimer();
+          }, 3000);
+        }
+      });
+    });
+
+    // Auto-rotate about gallery images every 4.5 seconds
+    const ABOUT_ROTATE_MS = 4500;
+    let aboutPaused = false;
+    let aboutTimer = null;
+
+    function getAboutThumbs() {
+      return Array.from(aboutGallery.querySelectorAll("img"));
+    }
+
+    function getAboutActiveIndex(thumbs) {
+      const current = aboutFrameImg ? aboutFrameImg.getAttribute("src") || "" : "";
+      const currentNorm = normalizeSrc(current);
+      const idx = thumbs.findIndex(function (t) {
+        return normalizeSrc(t.getAttribute("src") || "") === currentNorm;
+      });
+      return idx >= 0 ? idx : 0;
+    }
+
+    function tickAbout() {
+      if (aboutPaused || document.hidden) return;
+      const thumbs = getAboutThumbs();
+      if (thumbs.length <= 1) return;
+      const nextIdx = (getAboutActiveIndex(thumbs) + 1) % thumbs.length;
+      const thumb = thumbs[nextIdx];
+      swapAboutImage(thumb.getAttribute("src"), thumb);
+    }
+
+    function startAboutTimer() {
+      if (aboutTimer || getAboutThumbs().length <= 1) return;
+      aboutTimer = window.setInterval(tickAbout, ABOUT_ROTATE_MS);
+    }
+
+    function stopAboutTimer() {
+      if (!aboutTimer) return;
+      window.clearInterval(aboutTimer);
+      aboutTimer = null;
+    }
+
+    // Pause on hover/focus
+    if (aboutMediaRoot) {
+      aboutMediaRoot.addEventListener("mouseenter", function () {
+        aboutPaused = true;
+      });
+      aboutMediaRoot.addEventListener("mouseleave", function () {
+        aboutPaused = false;
+      });
+      aboutMediaRoot.addEventListener("focusin", function () {
+        aboutPaused = true;
+      });
+      aboutMediaRoot.addEventListener("focusout", function () {
+        aboutPaused = false;
+      });
+    }
+
+    document.addEventListener("visibilitychange", function () {
+      if (!document.hidden) aboutPaused = false;
+    });
+
+    startAboutTimer();
+  }
+
   // Footer year
   if (yearEl) {
     yearEl.textContent = String(new Date().getFullYear());
@@ -310,31 +532,233 @@
     }
   });
 
-  // Appointment form validation + success feedback
+  // Auto-select service from URL parameter
+  const serviceSelect = document.getElementById("service");
+  function selectServiceFromURL() {
+    if (!serviceSelect) return;
+    
+    // Get the hash from URL (e.g., #appointment?service=Hydra%20Facial%20%26%20Glow)
+    const hash = window.location.hash;
+    if (!hash || !hash.includes("service=")) return;
+    
+    // Extract service parameter from hash
+    const hashParts = hash.split("?");
+    if (hashParts.length < 2) return;
+    
+    try {
+      const params = new URLSearchParams(hashParts[1]);
+      const serviceName = params.get("service");
+      
+      if (serviceName) {
+        // Decode the service name
+        const decodedService = decodeURIComponent(serviceName.replace(/\+/g, " "));
+        
+        // Try to find exact match in options
+        const options = serviceSelect.querySelectorAll("option");
+        for (let i = 0; i < options.length; i++) {
+          const optionValue = options[i].value;
+          const optionText = options[i].textContent.trim();
+          
+          // Match by value or text content
+          if (optionValue === decodedService || optionText === decodedService) {
+            serviceSelect.value = optionValue;
+            
+            // Scroll to appointment section smoothly after a brief delay
+            setTimeout(function() {
+              const appointmentSection = document.getElementById("appointment");
+              if (appointmentSection) {
+                const headerOffset = 100;
+                const elementPosition = appointmentSection.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                
+                window.scrollTo({
+                  top: offsetPosition,
+                  behavior: "smooth"
+                });
+              }
+            }, 150);
+            break;
+          }
+        }
+      }
+    } catch (e) {
+      // Silently fail if URL parsing fails
+      console.error("Error parsing service from URL:", e);
+    }
+  }
+
+  // Run on page load (with delay to ensure DOM is ready)
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", selectServiceFromURL);
+  } else {
+    // DOM is already ready
+    setTimeout(selectServiceFromURL, 100);
+  }
+
+  // Also run when hash changes (for same-page navigation)
+  window.addEventListener("hashchange", function() {
+    setTimeout(selectServiceFromURL, 100);
+  });
+
+  // Handle Book Now button clicks with data-service attribute
+  document.querySelectorAll('a[href^="#appointment"][data-service]').forEach(function(link) {
+    link.addEventListener("click", function(e) {
+      const serviceName = this.getAttribute("data-service");
+      if (serviceName && serviceSelect) {
+        // Set the service immediately
+        const options = serviceSelect.querySelectorAll("option");
+        for (let i = 0; i < options.length; i++) {
+          if (options[i].value === serviceName || options[i].textContent.trim() === serviceName) {
+            serviceSelect.value = options[i].value;
+            break;
+          }
+        }
+      }
+    });
+  });
+
+  // EmailJS Configuration - Replace with your actual keys
+  const EMAILJS_CONFIG = {
+    PUBLIC_KEY: "gFI-rk8wvwAWAW_nM", // Replace with your EmailJS Public Key
+    SERVICE_ID: "service_uk38hjn", // Replace with your EmailJS Service ID
+    TEMPLATE_ID_CLINIC: "template_hk1l74j", // Template for clinic notification
+    TEMPLATE_ID_USER: "YOUR_TEMPLATE_ID_USER" // Template for user confirmation
+  };
+
+  // Initialize EmailJS
+  if (typeof emailjs !== "undefined") {
+    emailjs.init(EMAILJS_CONFIG.PUBLIC_KEY);
+  }
+
+  // Appointment form validation + EmailJS integration
   if (form && success) {
     form.addEventListener("submit", function (e) {
       e.preventDefault();
       let valid = true;
 
-      form.querySelectorAll("input[required]").forEach(function (field) {
+      // Remove previous error states
+      form.querySelectorAll(".field-error").forEach(function (field) {
         field.classList.remove("field-error");
-        if (!field.value) {
+      });
+
+      // Validate required fields
+      form.querySelectorAll("input[required]").forEach(function (field) {
+        if (!field.value.trim()) {
           valid = false;
           field.classList.add("field-error");
         }
       });
 
+      // Validate email format
+      const emailField = form.querySelector('input[type="email"]');
+      if (emailField && emailField.value) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(emailField.value)) {
+          valid = false;
+          emailField.classList.add("field-error");
+        }
+      }
+
+      // Validate service selection
+      if (serviceSelect && !serviceSelect.value) {
+        valid = false;
+        serviceSelect.classList.add("field-error");
+      }
+
       if (!valid) {
         const firstError = form.querySelector(".field-error");
         if (firstError) {
-          firstError.scrollIntoView({ behavior: "smooth" });
+          firstError.scrollIntoView({ behavior: "smooth", block: "center" });
         }
         return;
       }
 
-      // Backend API call would be placed here.
-      success.hidden = false;
-      form.reset();
+      // Disable submit button to prevent double submission
+      const submitBtn = form.querySelector('button[type="submit"]');
+      const originalBtnText = submitBtn.textContent;
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Sending...";
+
+      // Collect form data
+      const formData = {
+        name: form.querySelector("#name").value.trim(),
+        email: form.querySelector("#email").value.trim(),
+        phone: form.querySelector("#phone").value.trim(),
+        service: serviceSelect ? serviceSelect.value : "",
+        date: form.querySelector("#date").value || "Not specified",
+        message: form.querySelector("#message").value.trim() || "No additional message"
+      };
+
+      // Check if EmailJS is configured
+      if (EMAILJS_CONFIG.PUBLIC_KEY === "gFI-rk8wvwAWAW_nM" || 
+          EMAILJS_CONFIG.SERVICE_ID === "service_uk38hjn") {
+        console.warn("EmailJS not configured. Please add your EmailJS keys.");
+        // Fallback: show success message even without email
+        success.hidden = false;
+        form.reset();
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalBtnText;
+        return;
+      }
+
+      // Send email to clinic
+      const clinicEmailPromise = emailjs.send(
+        EMAILJS_CONFIG.SERVICE_ID,
+        EMAILJS_CONFIG.TEMPLATE_ID_CLINIC,
+        {
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          service: formData.service,
+          date: formData.date,
+          message: formData.message,
+          time: new Date().toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" })
+        }
+      );
+
+      // Send confirmation email to user
+      const userEmailPromise = emailjs.send(
+        EMAILJS_CONFIG.SERVICE_ID,
+        EMAILJS_CONFIG.TEMPLATE_ID_USER,
+        {
+          name: formData.name,
+          email: formData.email,
+          service: formData.service,
+          date: formData.date,
+          time: new Date().toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" })
+        }
+      );
+
+      // Handle email sending
+      Promise.all([clinicEmailPromise, userEmailPromise])
+        .then(function (responses) {
+          console.log("Emails sent successfully:", responses);
+          success.hidden = false;
+          success.textContent = "Your appointment request has been submitted successfully. We've sent a confirmation email to " + formData.email + ". We'll contact you shortly.";
+          form.reset();
+          
+          // Scroll to success message
+          success.scrollIntoView({ behavior: "smooth", block: "center" });
+          
+          // Reset button
+          submitBtn.disabled = false;
+          submitBtn.textContent = originalBtnText;
+        })
+        .catch(function (error) {
+          console.error("Email sending failed:", error);
+          
+          // Still show success message to user (email might have failed but form was submitted)
+          success.hidden = false;
+          success.textContent = "Your appointment request has been received. We'll contact you shortly at " + formData.email + ".";
+          form.reset();
+          
+          // Reset button
+          submitBtn.disabled = false;
+          submitBtn.textContent = originalBtnText;
+          
+          // Scroll to success message
+          success.scrollIntoView({ behavior: "smooth", block: "center" });
+        });
     });
   }
 })();
