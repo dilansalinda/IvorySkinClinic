@@ -617,162 +617,78 @@
     });
   });
 
-  // EmailJS Configuration - Replace with your actual keys
-  const EMAILJS_CONFIG = {
-    PUBLIC_KEY: "gFI-rk8wvwAWAW_nM", // Replace with your EmailJS Public Key
-    SERVICE_ID: "service_uk38hjn", // Replace with your EmailJS Service ID
-    TEMPLATE_ID_CLINIC: "template_hk1l74j", // Template for clinic notification
-    TEMPLATE_ID_USER: "template_nyze7h7" // Template for user confirmation
-  };
+  // EmailJS: init and form send (replace placeholders with your EmailJS dashboard values)
+  document.addEventListener("DOMContentLoaded", function () {
+    if (typeof emailjs === "undefined") return;
+    emailjs.init("rk8wvwAWAW_nM"); // Replace with your EmailJS Public Key (Account → General)
 
-  // Initialize EmailJS
-  if (typeof emailjs !== "undefined") {
-    emailjs.init(EMAILJS_CONFIG.PUBLIC_KEY);
-  }
+    const appointmentForm = document.getElementById("appointmentForm");
+    const formSuccess = document.getElementById("formSuccess");
+    if (!appointmentForm) return;
 
-  // Appointment form validation + EmailJS integration
-  if (form && success) {
-    form.addEventListener("submit", function (e) {
-      e.preventDefault();
+    appointmentForm.addEventListener("submit", function (event) {
+      event.preventDefault();
+
+      // Validation
       let valid = true;
-
-      // Remove previous error states
-      form.querySelectorAll(".field-error").forEach(function (field) {
-        field.classList.remove("field-error");
+      appointmentForm.querySelectorAll(".field-error").forEach(function (el) { el.classList.remove("field-error"); });
+      appointmentForm.querySelectorAll("input[required]").forEach(function (field) {
+        if (!field.value.trim()) { valid = false; field.classList.add("field-error"); }
       });
-
-      // Validate required fields
-      form.querySelectorAll("input[required]").forEach(function (field) {
-        if (!field.value.trim()) {
-          valid = false;
-          field.classList.add("field-error");
-        }
-      });
-
-      // Validate email format
-      const emailField = form.querySelector('input[type="email"]');
+      const emailField = appointmentForm.querySelector('input[type="email"]');
       if (emailField && emailField.value) {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(emailField.value)) {
-          valid = false;
-          emailField.classList.add("field-error");
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailField.value)) {
+          valid = false; emailField.classList.add("field-error");
         }
       }
-
-      // Validate service selection
+      const serviceSelect = document.getElementById("service");
       if (serviceSelect && !serviceSelect.value) {
-        valid = false;
-        serviceSelect.classList.add("field-error");
+        valid = false; serviceSelect.classList.add("field-error");
       }
-
       if (!valid) {
-        const firstError = form.querySelector(".field-error");
-        if (firstError) {
-          firstError.scrollIntoView({ behavior: "smooth", block: "center" });
-        }
+        const first = appointmentForm.querySelector(".field-error");
+        if (first) first.scrollIntoView({ behavior: "smooth", block: "center" });
         return;
       }
 
-      // Disable submit button to prevent double submission
-      const submitBtn = form.querySelector('button[type="submit"]');
+      const submitBtn = appointmentForm.querySelector('button[type="submit"]');
       const originalBtnText = submitBtn.textContent;
       submitBtn.disabled = true;
       submitBtn.textContent = "Sending...";
 
-      // Collect form data (parameter names must match EmailJS templates: name, email, phone, service, date, time, message)
-      const timeSelect = form.querySelector("#time");
-      const formData = {
-        name: form.querySelector("#name").value.trim(),
-        email: form.querySelector("#email").value.trim(),
-        phone: form.querySelector("#phone").value.trim(),
-        service: serviceSelect ? serviceSelect.value : "",
-        date: form.querySelector("#date").value || "Not specified",
-        time: timeSelect && timeSelect.value ? timeSelect.value : "Not specified",
-        message: form.querySelector("#message").value.trim() || "No additional message"
+      const formData = new FormData(appointmentForm);
+      const templateParams = {
+        name: formData.get("name") || "",
+        email: formData.get("email") || "",
+        phone: formData.get("phone") || "",
+        service: formData.get("service") || "",
+        date: formData.get("date") || "N/A",
+        time: formData.get("time") || "N/A",
+        message: formData.get("message") || "N/A"
       };
 
-      // Check required EmailJS keys (Public Key and Service ID must be your real values from dashboard)
-      const hasPublicKey = EMAILJS_CONFIG.PUBLIC_KEY && EMAILJS_CONFIG.PUBLIC_KEY !== "gFI-rk8wvwAWAW_nM";
-      const hasServiceId = EMAILJS_CONFIG.SERVICE_ID && EMAILJS_CONFIG.SERVICE_ID !== "service_uk38hjn";
-      const hasClinicTemplate = EMAILJS_CONFIG.TEMPLATE_ID_CLINIC && EMAILJS_CONFIG.TEMPLATE_ID_CLINIC !== "template_hk1l74j";
-      const hasUserTemplate = EMAILJS_CONFIG.TEMPLATE_ID_USER && EMAILJS_CONFIG.TEMPLATE_ID_USER !== "template_nyze7h7";
-
-      if (!hasPublicKey || !hasServiceId || !hasClinicTemplate) {
-        console.warn("EmailJS: Set PUBLIC_KEY, SERVICE_ID, and TEMPLATE_ID_CLINIC in script.js (from EmailJS dashboard).");
-        success.hidden = false;
-        success.textContent = "Form is not connected to email yet. We'll contact you shortly at " + formData.email + ".";
-        form.reset();
-        submitBtn.disabled = false;
-        submitBtn.textContent = originalBtnText;
-        return;
-      }
-
-      if (typeof emailjs === "undefined") {
-        console.error("EmailJS SDK not loaded. Check the script tag in index.html.");
-        success.hidden = false;
-        success.textContent = "Your request has been received. We'll contact you shortly at " + formData.email + ".";
-        form.reset();
-        submitBtn.disabled = false;
-        submitBtn.textContent = originalBtnText;
-        return;
-      }
-
-      // Send email to clinic (IvoryAppointmentReply: name, email, phone, service, date, time, message)
-      const clinicParams = {
-        name: formData.name,
-        email: formData.email,
-        phone: formData.phone,
-        service: formData.service,
-        date: formData.date,
-        time: formData.time,
-        message: formData.message
-      };
-      const clinicEmailPromise = emailjs.send(
-        EMAILJS_CONFIG.SERVICE_ID,
-        EMAILJS_CONFIG.TEMPLATE_ID_CLINIC,
-        clinicParams
-      );
-
-      // Optionally send confirmation to user (Appointment Reply: name, service, date, time; To Email uses {{email}} in template)
-      const userParams = {
-        name: formData.name,
-        email: formData.email,
-        service: formData.service,
-        date: formData.date,
-        time: formData.time
-      };
-      const promises = [clinicEmailPromise];
-      if (hasUserTemplate) {
-        promises.push(
-          emailjs.send(EMAILJS_CONFIG.SERVICE_ID, EMAILJS_CONFIG.TEMPLATE_ID_USER, userParams)
-        );
-      }
-
-      // Handle email sending
-      Promise.all(promises)
-        .then(function (responses) {
-          console.log("EmailJS sent successfully:", responses.length, "email(s)");
-          success.hidden = false;
-          success.textContent = hasUserTemplate
-            ? "Your appointment request has been submitted successfully. We've sent a confirmation email to " + formData.email + ". We'll contact you shortly."
-            : "Your appointment request has been submitted successfully. We'll contact you shortly at " + formData.email + ".";
-          form.reset();
-          success.scrollIntoView({ behavior: "smooth", block: "center" });
+      emailjs.send("service_uk38hjn", "template_nyze7h7", templateParams)
+        .then(function (response) {
+          if (formSuccess) {
+            formSuccess.hidden = false;
+            formSuccess.textContent = "Appointment request sent successfully! We'll contact you shortly.";
+            formSuccess.scrollIntoView({ behavior: "smooth", block: "center" });
+          }
+          appointmentForm.reset();
           submitBtn.disabled = false;
           submitBtn.textContent = originalBtnText;
-        })
-        .catch(function (error) {
-          console.error("EmailJS send failed:", error);
-          if (error && error.text) console.error("EmailJS error text:", error.text);
-          success.hidden = false;
-          success.textContent = "Your appointment request has been received. We'll contact you shortly at " + formData.email + ".";
-          form.reset();
+        }, function (error) {
+          console.error("EmailJS error:", error);
+          if (formSuccess) {
+            formSuccess.hidden = false;
+            formSuccess.textContent = "Failed to send appointment request. Please try again or contact us directly.";
+            formSuccess.scrollIntoView({ behavior: "smooth", block: "center" });
+          }
           submitBtn.disabled = false;
           submitBtn.textContent = originalBtnText;
-          success.scrollIntoView({ behavior: "smooth", block: "center" });
         });
     });
-  }
+  });
 })();
 
 
