@@ -620,7 +620,7 @@
   // EmailJS: init and form send (replace placeholders with your EmailJS dashboard values)
   document.addEventListener("DOMContentLoaded", function () {
     if (typeof emailjs === "undefined") return;
-    emailjs.init("rk8wvwAWAW_nM"); // Replace with your EmailJS Public Key (Account → General)
+    emailjs.init("gFI-rk8wvwAWAW_nM"); // Replace with your EmailJS Public Key (Account → General)
 
     const appointmentForm = document.getElementById("appointmentForm");
     const formSuccess = document.getElementById("formSuccess");
@@ -667,7 +667,7 @@
         message: formData.get("message") || "N/A"
       };
 
-      emailjs.send("service_uk38hjn", "template_nyze7h7", templateParams)
+      emailjs.send("service_uk38hjn", "template_hk1l74j", templateParams)
         .then(function (response) {
           if (formSuccess) {
             formSuccess.hidden = false;
