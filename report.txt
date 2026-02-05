@@ -1,0 +1,416 @@
+METRICS
+Expand view
+First Contentful Paint
+5.3 s
+Largest Contentful Paint
+54.9 s
+Total Blocking Time
+110 ms
+Cumulative Layout Shift
+0.001
+Speed Index
+5.3 s
+Captured at Feb 5, 2026 at 4:11 PM GMT+5:30
+Emulated Moto G Power with Lighthouse 13.0.1
+Single page session
+Initial page load
+Slow 4G throttling
+Using HeadlessChromium 137.0.7151.119 with lr
+View Treemap
+Screenshot
+Screenshot
+Screenshot
+Screenshot
+Screenshot
+Screenshot
+Screenshot
+Screenshot
+Show audits relevant to:
+
+All
+
+FCP
+
+LCP
+
+TBT
+
+CLS
+INSIGHTS
+Render blocking requests Est savings of 3,120 ms
+Requests are blocking the page's initial render, which may delay LCP. Deferring or inlining can move these network requests out of the critical path.LCPFCPUnscored
+  Show 3rd-party resources (2)
+URL
+Transfer Size
+Duration
+Cloudflare CDN Cdn 
+19.4 KiB	900 ms
+…css/all.min.css(cdnjs.cloudflare.com)
+19.4 KiB
+900 ms
+Google Fonts Cdn 
+1.6 KiB	780 ms
+/css2?family=…(fonts.googleapis.com)
+1.6 KiB
+780 ms
+ivoryskinclinic.lk 1st Party
+8.5 KiB	150 ms
+/styles.css(ivoryskinclinic.lk)
+8.5 KiB
+150 ms
+Use efficient cache lifetimes Est savings of 11,291 KiB
+A long cache lifetime can speed up repeat visits to your page. Learn more about caching.LCPFCPUnscored
+  Show 3rd-party resources (1)
+Request
+Cache TTL
+Transfer Size
+ivoryskinclinic.lk 1st Party
+12,318 KiB
+…treatments/Hydra%20Facial%20treatment.png(ivoryskinclinic.lk)
+10m
+2,333 KiB
+…treatments/Hydra%20Facial.png(ivoryskinclinic.lk)
+10m
+1,919 KiB
+…treatments/Acne%20Treatments.png(ivoryskinclinic.lk)
+10m
+1,870 KiB
+…treatments/Microdermabrasion.png(ivoryskinclinic.lk)
+10m
+1,775 KiB
+…treatments/Hair%20PRP%20Treatment.png(ivoryskinclinic.lk)
+10m
+1,727 KiB
+…treatments/Facial%20PRP%20Treatment.png(ivoryskinclinic.lk)
+10m
+1,714 KiB
+…indoor/IMG-20251…~2.jpg(ivoryskinclinic.lk)
+10m
+162 KiB
+…indoor/IMG-20251…~2.jpg(ivoryskinclinic.lk)
+10m
+161 KiB
+…indoor/IMG-20251…~2.jpg(ivoryskinclinic.lk)
+10m
+158 KiB
+…indoor/IMG-20251…~2.jpg(ivoryskinclinic.lk)
+10m
+157 KiB
+…portait/portait_03.png(ivoryskinclinic.lk)
+10m
+126 KiB
+…outdoor/WhatsApp%20Image%202026-01-01%20at%204.17.19%20PM.jpeg(ivoryskinclinic.lk)
+10m
+98 KiB
+…data/logo.png(ivoryskinclinic.lk)
+10m
+36 KiB
+/fonnts.com-The-Seasons-.otf(ivoryskinclinic.lk)
+10m
+33 KiB
+/fonnts.com-The-Seasons-.otf(ivoryskinclinic.lk)
+10m
+33 KiB
+/styles.css(ivoryskinclinic.lk)
+10m
+8 KiB
+/script.js(ivoryskinclinic.lk)
+10m
+6 KiB
+JSDelivr CDN Cdn 
+2 KiB
+…dist/email.min.js(cdn.jsdelivr.net)
+7d
+2 KiB
+Improve image delivery Est savings of 11,829 KiB
+Reducing the download time of images can improve the perceived load time of the page and LCP. Learn more about optimizing image sizeLCPFCPUnscored
+URL
+Resource Size
+Est Savings
+ivoryskinclinic.lk 1st Party
+12,229.1 KiB	11,829.1 KiB
+div.services-grid > div.service-card > div.service-media > img
+<img src="assets/treatments/Hydra%20Facial%20treatment.png" alt="" loading="lazy" decoding="async">
+…treatments/Hydra%20Facial%20treatment.png(ivoryskinclinic.lk)
+2,332.1 KiB
+2,264.2 KiB
+Using a modern image format (WebP, AVIF) or increasing the image compression could improve this image's download size.
+2,264.2 KiB
+img.is-fade-out
+<img src="assets/treatments/Hydra%20Facial.png" alt="" loading="eager" decoding="async" class="is-fade-out">
+…treatments/Hydra%20Facial.png(ivoryskinclinic.lk)
+1,918.8 KiB
+1,857.6 KiB
+Using a modern image format (WebP, AVIF) or increasing the image compression could improve this image's download size.
+1,689.0 KiB
+This image file is larger than it needs to be (1379x1024) for its displayed dimensions (751x501). Use responsive images to reduce the image download size.
+1,408.0 KiB
+div.services-grid > div.service-card > div.service-media > img
+<img src="assets/treatments/Acne%20Treatments.png" alt="" loading="lazy" decoding="async">
+…treatments/Acne%20Treatments.png(ivoryskinclinic.lk)
+1,869.4 KiB
+1,828.2 KiB
+Using a modern image format (WebP, AVIF) or increasing the image compression could improve this image's download size.
+1,716.3 KiB
+This image file is larger than it needs to be (1536x613) for its displayed dimensions (616x411). Use responsive images to reduce the image download size.
+1,366.9 KiB
+div.services-grid > div.service-card > div.service-media > img
+<img src="assets/treatments/Microdermabrasion.png" alt="" loading="lazy" decoding="async">
+…treatments/Microdermabrasion.png(ivoryskinclinic.lk)
+1,774.0 KiB
+1,732.9 KiB
+Using a modern image format (WebP, AVIF) or increasing the image compression could improve this image's download size.
+1,620.9 KiB
+This image file is larger than it needs to be (1536x613) for its displayed dimensions (616x411). Use responsive images to reduce the image download size.
+1,297.1 KiB
+div.services-grid > div.service-card > div.service-media > img
+<img src="assets/treatments/Hair%20PRP%20Treatment.png" alt="" loading="lazy" decoding="async">
+…treatments/Hair%20PRP%20Treatment.png(ivoryskinclinic.lk)
+1,726.5 KiB
+1,685.3 KiB
+Using a modern image format (WebP, AVIF) or increasing the image compression could improve this image's download size.
+1,573.4 KiB
+This image file is larger than it needs to be (1536x613) for its displayed dimensions (616x411). Use responsive images to reduce the image download size.
+1,262.4 KiB
+div.services-grid > div.service-card > div.service-media > img
+<img src="assets/treatments/Facial%20PRP%20Treatment.png" alt="" loading="lazy" decoding="async">
+…treatments/Facial%20PRP%20Treatment.png(ivoryskinclinic.lk)
+1,713.8 KiB
+1,672.6 KiB
+Using a modern image format (WebP, AVIF) or increasing the image compression could improve this image's download size.
+1,560.6 KiB
+This image file is larger than it needs to be (1536x613) for its displayed dimensions (616x411). Use responsive images to reduce the image download size.
+1,253.1 KiB
+div.about-media > div.hero-media > div.hero-gallery > img.is-active
+<img src="assets/indoor/IMG-20251228-WA0003~2.jpg" alt="" loading="lazy" decoding="async" role="button" tabindex="0" class="is-active">
+…indoor/IMG-20251…~2.jpg(ivoryskinclinic.lk)
+161.6 KiB
+158.4 KiB
+This image file is larger than it needs to be (953x1022) for its displayed dimensions (120x161). Use responsive images to reduce the image download size.
+158.4 KiB
+div.about-media > div.hero-media > div.hero-gallery > img
+<img src="assets/indoor/IMG-20251228-WA0008~2.jpg" alt="" loading="lazy" decoding="async" role="button" tabindex="0">
+…indoor/IMG-20251…~2.jpg(ivoryskinclinic.lk)
+160.4 KiB
+156.8 KiB
+Using a modern image format (WebP, AVIF) or increasing the image compression could improve this image's download size.
+36.8 KiB
+This image file is larger than it needs to be (840x904) for its displayed dimensions (173x130). Use responsive images to reduce the image download size.
+155.7 KiB
+div.about-media > div.hero-media > div.hero-gallery > img
+<img src="assets/indoor/IMG-20251228-WA0004~2.jpg" alt="" loading="lazy" decoding="async" role="button" tabindex="0">
+…indoor/IMG-20251…~2.jpg(ivoryskinclinic.lk)
+157.2 KiB
+153.6 KiB
+Using a modern image format (WebP, AVIF) or increasing the image compression could improve this image's download size.
+36.8 KiB
+This image file is larger than it needs to be (828x894) for its displayed dimensions (173x130). Use responsive images to reduce the image download size.
+152.5 KiB
+div.about-media > div.hero-media > div.hero-gallery > img
+<img src="assets/indoor/IMG-20251228-WA0011~2.jpg" alt="" loading="lazy" decoding="async" role="button" tabindex="0">
+…indoor/IMG-20251…~2.jpg(ivoryskinclinic.lk)
+156.6 KiB
+153.4 KiB
+This image file is larger than it needs to be (946x1015) for its displayed dimensions (120x161). Use responsive images to reduce the image download size.
+153.4 KiB
+Doctor portrait
+<img src="assets/portait/portait_03.png" alt="Doctor portrait" loading="lazy" decoding="async">
+…portait/portait_03.png(ivoryskinclinic.lk)
+125.5 KiB
+102.4 KiB
+Using a modern image format (WebP, AVIF) or increasing the image compression could improve this image's download size.
+102.4 KiB
+Ivory Skin Clinic Logo
+<img src="assets/data/logo.png" alt="Ivory Skin Clinic Logo">
+…data/logo.png(ivoryskinclinic.lk)
+35.3 KiB
+34.7 KiB
+Using a modern image format (WebP, AVIF) or increasing the image compression could improve this image's download size.
+24.4 KiB
+This image file is larger than it needs to be (254x263) for its displayed dimensions (57x60). Use responsive images to reduce the image download size.
+33.5 KiB
+img.is-fade-out
+<img src="assets/outdoor/WhatsApp%20Image%202026-01-01%20at%204.17.19%20PM.jpeg" alt="" loading="lazy" decoding="async" class="is-fade-out">
+…outdoor/WhatsApp%20Image%202026-01-01%20at%204.17.19%20PM.jpeg(ivoryskinclinic.lk)
+97.9 KiB
+28.9 KiB
+Using a modern image format (WebP, AVIF) or increasing the image compression could improve this image's download size.
+28.9 KiB
+Forced reflow
+A forced reflow occurs when JavaScript queries geometric properties (such as offsetWidth) after styles have been invalidated by a change to the DOM state. This can result in poor performance. Learn more about forced reflows and possible mitigations.Unscored
+Top function call
+Total reflow time
+/gtag/js?id=G-N65LFJ74HF:795:135(www.googletagmanager.com)
+1 ms
+Source
+Total reflow time
+[unattributed]
+69 ms
+/gtag/js?id=G-N65LFJ74HF:792:14(www.googletagmanager.com)
+1 ms
+LCP request discovery
+Optimize LCP by making the LCP image discoverable from the HTML immediately, and avoiding lazy-loadingLCPUnscored
+lazy load not applied
+fetchpriority=high should be applied
+Request is discoverable in initial document
+img.is-fade-out
+<img src="assets/treatments/Hydra%20Facial.png" alt="" loading="eager" decoding="async" class="is-fade-out">
+Network dependency tree
+Avoid chaining critical requests by reducing the length of chains, reducing the download size of resources, or deferring the download of unnecessary resources to improve page load.LCPUnscored
+Maximum critical path latency: 230 ms
+Initial Navigation
+https://ivoryskinclinic.lk - 72 ms, 8.80 KiB
+/g/collect?v=…(www.google-analytics.com) - 62 ms, 0.00 KiB
+…css/all.min.css(cdnjs.cloudflare.com) - 172 ms, 19.38 KiB
+…webfonts/fa-brands-400.woff2(cdnjs.cloudflare.com) - 230 ms, 114.90 KiB
+…webfonts/fa-solid-900.woff2(cdnjs.cloudflare.com) - 229 ms, 153.82 KiB
+/css2?family=…(fonts.googleapis.com) - 83 ms, 1.61 KiB
+…v20/UcC73FwrK….woff2(fonts.gstatic.com) - 227 ms, 48.09 KiB
+/styles.css(ivoryskinclinic.lk) - 81 ms, 8.48 KiB
+/fonnts.com-The-Seasons-.otf(ivoryskinclinic.lk) - 228 ms, 33.10 KiB
+…dist/email.min.js(cdn.jsdelivr.net) - 175 ms, 2.25 KiB
+Preconnected origins
+preconnect hints help the browser establish a connection earlier in the page load, saving time when the first request for that origin is made. The following are the origins that the page preconnected to.
+no origins were preconnected
+Preconnect candidates
+Add preconnect hints to your most important origins, but try to use no more than 4.
+No additional origins are good candidates for preconnecting
+Font display Est savings of 20 ms
+Consider setting font-display to swap or optional to ensure text is consistently visible. swap can be further optimized to mitigate layout shifts with font metric overrides.FCPUnscored
+URL
+Est Savings
+Cloudflare CDN Cdn 
+…webfonts/fa-solid-900.woff2(cdnjs.cloudflare.com)
+20 ms
+…webfonts/fa-brands-400.woff2(cdnjs.cloudflare.com)
+20 ms
+Layout shift culprits
+Optimize DOM size
+LCP breakdown
+3rd parties
+These insights are also available in the Chrome DevTools Performance Panel - record a trace to view more detailed information.
+DIAGNOSTICS
+Reduce unused CSS Est savings of 18 KiB
+Reduce unused rules from stylesheets and defer CSS not used for above-the-fold content to decrease bytes consumed by network activity. Learn how to reduce unused CSS.LCPFCPUnscored
+URL
+Transfer Size
+Est Savings
+Cloudflare CDN Cdn 
+18.3 KiB	18.0 KiB
+…css/all.min.css(cdnjs.cloudflare.com)
+18.3 KiB
+18.0 KiB
+Reduce unused JavaScript Est savings of 328 KiB
+Reduce unused JavaScript and defer loading scripts until they are required to decrease bytes consumed by network activity. Learn how to reduce unused JavaScript.LCPFCPUnscored
+URL
+Transfer Size
+Est Savings
+Google Tag Manager Tag-Manager 
+616.6 KiB	327.7 KiB
+/gtag/js?id=G-N65LFJ74HF&cx=c&gtm=4e6231(www.googletagmanager.com)
+140.8 KiB
+97.1 KiB
+/gtm.js?id=GTM-T38MGRHX(www.googletagmanager.com)
+97.1 KiB
+60.3 KiB
+/gtm.js?id=GTM-T38MGRHX(www.googletagmanager.com)
+97.1 KiB
+58.0 KiB
+/gtag/js?id=G-N65LFJ74HF(www.googletagmanager.com)
+140.8 KiB
+56.3 KiB
+/gtag/js?id=G-N65LFJ74HF(www.googletagmanager.com)
+140.8 KiB
+55.9 KiB
+Image elements do not have explicit width and height
+Set an explicit width and height on image elements to reduce layout shifts and improve CLS. Learn how to set image dimensionsCLSUnscored
+URL
+ivoryskinclinic.lk 1st Party
+Ivory Skin Clinic Logo
+<img src="assets/data/logo.png" alt="Ivory Skin Clinic Logo">
+…data/logo.png(ivoryskinclinic.lk)
+Avoid enormous network payloads Total size was 25,954 KiB
+Large network payloads cost users real money and are highly correlated with long load times. Learn how to reduce payload sizes.Unscored
+URL
+Transfer Size
+ivoryskinclinic.lk 1st Party
+19,247.7 KiB
+…treatments/Hydra%20Facial%20treatment.png(ivoryskinclinic.lk)
+2,332.7 KiB
+…treatments/Hydra%20Facial%20treatment.png(ivoryskinclinic.lk)
+2,332.6 KiB
+…treatments/Hydra%20Facial.png(ivoryskinclinic.lk)
+1,919.4 KiB
+…treatments/Hydra%20Facial.png(ivoryskinclinic.lk)
+1,919.4 KiB
+…treatments/Acne%20Treatments.png(ivoryskinclinic.lk)
+1,870.0 KiB
+…treatments/Acne%20Treatments.png(ivoryskinclinic.lk)
+1,870.0 KiB
+…treatments/Microdermabrasion.png(ivoryskinclinic.lk)
+1,774.6 KiB
+…treatments/Microdermabrasion.png(ivoryskinclinic.lk)
+1,774.6 KiB
+…treatments/Hair%20PRP%20Treatment.png(ivoryskinclinic.lk)
+1,727.1 KiB
+…treatments/Hair%20PRP%20Treatment.png(ivoryskinclinic.lk)
+1,727.1 KiB
+Avoid long main-thread tasks 7 long tasks found
+Avoid non-composited animations 2 animated elements found
+More information about the performance of your application. These numbers don't directly affect the Performance score.
+PASSED AUDITS (10)
+Show
+90
+Accessibility
+These checks highlight opportunities to improve the accessibility of your web app. Automatic detection can only detect a subset of issues and does not guarantee the accessibility of your web app, so manual testing is also encouraged.
+ARIA
+Elements use prohibited ARIA attributes
+These are opportunities to improve the usage of ARIA in your application which may enhance the experience for users of assistive technology, like a screen reader.
+NAMES AND LABELS
+<frame> or <iframe> elements do not have a title
+These are opportunities to improve the semantics of the controls in your application. This may enhance the experience for users of assistive technology, like a screen reader.
+BEST PRACTICES
+Touch targets do not have sufficient size or spacing.
+Uses ARIA roles only on compatible elements
+Identical links have the same purpose.
+These items highlight common accessibility best practices.
+ADDITIONAL ITEMS TO MANUALLY CHECK (10)
+Show
+These items address areas which an automated testing tool cannot cover. Learn more in our guide on conducting an accessibility review.
+PASSED AUDITS (24)
+Show
+NOT APPLICABLE (31)
+Show
+81
+Best Practices
+GENERAL
+Uses deprecated APIs 1 warning found
+TRUST AND SAFETY
+Ensure CSP is effective against XSS attacks
+Use a strong HSTS policy
+Ensure proper origin isolation with COOP
+Mitigate clickjacking with XFO or CSP
+Mitigate DOM-based XSS with Trusted Types
+PASSED AUDITS (12)
+Show
+NOT APPLICABLE (2)
+Show
+92
+SEO
+These checks ensure that your page is following basic search engine optimization advice. There are many additional factors Lighthouse does not score here that may affect your search ranking, including performance on Core Web Vitals. Learn more about Google Search Essentials.
+CONTENT BEST PRACTICES
+Links do not have descriptive text 3 links found
+Descriptive link text helps search engines understand your content. Learn how to make links more accessible.
+Link destination
+Link Text
+ivoryskinclinic.lk 1st Party
+/blog-post-1.html(ivoryskinclinic.lk)
+Read more
+/blog-post-2.html(ivoryskinclinic.lk)
+Read more
+/blog-post-3.html(ivoryskinclinic.lk)
+Read more
+Format your HTML in a way that enables crawlers to better understand your app’s content.
+ADDITIONAL ITEMS TO MANUALLY CHECK (1)
+Show
+Run these additional validators on your site to check additional SEO best practices.
